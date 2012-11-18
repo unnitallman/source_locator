@@ -1,6 +1,13 @@
 # SourceLocator
 
-TODO: Write a gem description
+The real benefit of using open source libraries is that we get to see the code.
+But how often do we read code? Whenever we need help, we go to google and
+read results from Stackoverflow or some blogs. Some of might open up
+the library's documentation.
+
+SourceLocator encorages you to lookup source code more often by taking you to
+method definitions easily. It is a command line tool as of now. I hope to add
+plugins for popular text editors very soon.
 
 ## Installation
 
@@ -12,13 +19,13 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install source_locator
-
 ## Usage
 
-TODO: Write usage instructions here
+Once the gem installed a "showme" command will be available.
+
+In your Rails app's ROOT directory try
+
+   showme pluralize
 
 ## Contributing
 
