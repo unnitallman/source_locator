@@ -2,6 +2,21 @@
 
 require 'source_locator'
 
+rails_env_file = File.join(Dir.pwd, 'config', 'environment.rb')
+
+if File.exists? rails_env_file
+  puts "Loading Rails env..."
+  require rails_env_file
+end
+
+if defined? Rails
+  puts "Rails loaded."
+  puts "Loading classes from the Rails app..."
+  Rails.application.eager_load!
+  puts "Done."
+end
+
+
 storage = SourceLocator::Dictionary.new
 storage.build
 
