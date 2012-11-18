@@ -2,7 +2,7 @@
 
 require 'source_locator'
 
-rails_env_file = File.join(Dir.pwd, 'config', 'environment.rb')
+  rails_env_file = File.join(Dir.pwd, 'config', 'environment.rb')
 
 if File.exists? rails_env_file
   puts "Loading Rails env..."
