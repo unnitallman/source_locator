@@ -1,25 +1,32 @@
 #!/usr/bin/env ruby
 
 require 'source_locator'
+require 'yaml'
 
-  rails_env_file = File.join(Dir.pwd, 'config', 'environment.rb')
+rails_env_file = File.join(Dir.pwd, 'config', 'environment.rb')
+data_dump_file = File.join(Dir.pwd,SourceLocator::IndexFile)
 
-if File.exists? rails_env_file
-  puts "Loading Rails env..."
-  require rails_env_file
+if File.exists? data_dump_file
+  data = YAML.parse File.open(data_dump_file).read
+  storage = SourceLocator::Dictionary.new data
+else
+  if File.exists? rails_env_file
+    puts "Loading Rails env..."
+    require rails_env_file
+  end
+
+  if defined? Rails
+    puts "Rails loaded."
+    puts "Loading classes from the Rails app..."
+    Rails.application.eager_load!
+    puts "Done."
+  end
+
+  class_loader = SourceLocator::ClassLoader.new
+  data = class_loader.build
+  storage = SourceLocator::Dictionary.new data, data_dump_file
+  storage.export
 end
-
-if defined? Rails
-  puts "Rails loaded."
-  puts "Loading classes from the Rails app..."
-  Rails.application.eager_load!
-  puts "Done."
-end
-
-class_loader = SourceLocator::ClassLoader.new
-data = class_loader.build
-
-storage = SourceLocator::Dictionary.new data
 
 locater = SourceLocator::Locater.new(storage, ARGV[0])
 results = locater.find

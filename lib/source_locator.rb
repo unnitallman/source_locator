@@ -5,4 +5,5 @@ require "source_locator/locater"
 require "source_locator/editors/sublime_text"
 
 module SourceLocator
+  IndexFile = '.source_locator_index'
 end
