@@ -2,6 +2,7 @@ module SourceLocator
   class Dictionary
     def initialize(data, dump_file)
       @dict = data
+      @dump_file = dump_file
     end
 
     def find(method)
@@ -9,8 +10,8 @@ module SourceLocator
     end
 
     def export
-      File.open(dump_file) do |f|
-        f.puts @dict.to_yaml
+      File.open(@dump_file, 'w+') do |f|
+        Marshal.dump(@dict, f)
       end
     end
   end

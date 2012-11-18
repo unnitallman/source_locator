@@ -7,8 +7,11 @@ rails_env_file = File.join(Dir.pwd, 'config', 'environment.rb')
 data_dump_file = File.join(Dir.pwd,SourceLocator::IndexFile)
 
 if File.exists? data_dump_file
-  data = YAML.parse File.open(data_dump_file).read
-  storage = SourceLocator::Dictionary.new data
+  data = {}
+  File.open(data_dump_file) do |f|
+    data = Marshal.load(f)
+  end
+  storage = SourceLocator::Dictionary.new data, data_dump_file
 else
   if File.exists? rails_env_file
     puts "Loading Rails env..."
